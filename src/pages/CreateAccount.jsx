@@ -10,7 +10,7 @@ const CreateAccount = () => {
         titulo:""
       
     })
-    const { carrera, promedio,titulo, password, confirmpassword } = userForm;
+    const { universidad, carrera, promedio,titulo } = userForm;
     const handleChange = (e) => {
         setUserForm({
             ...userForm,
@@ -27,6 +27,20 @@ const CreateAccount = () => {
         // onSubmit={handleSubmit}
     >
 
+        <div className="my-5">
+            <label className="uppercase text-gray-900 block  text-xl font-bold"
+            htmlFor="universidad"
+            >Universidad</label>
+            <input 
+                name="universidad"
+                type="text"
+                placeholder="Ingresa el nombre de la institucion universitaria"
+                className="w-full mt-3 p-3 border rounded-xl bg-gray-200"
+                value={universidad}
+                onChange= {handleChange}
+                 />
+
+        </div>
         <div className="my-5">
             <label className="uppercase text-gray-900 block  text-xl font-bold"
             htmlFor="carrera"
@@ -48,7 +62,7 @@ const CreateAccount = () => {
             <input 
                 name="promedio"
                 type="text"
-                placeholder="Ingresa tu apellido"
+                placeholder="Ingresa tu promedio de calificaciones"
                 className="w-full mt-3 p-3 border rounded-xl bg-gray-200"
                 value={promedio}
                 onChange= {handleChange}
@@ -62,7 +76,7 @@ const CreateAccount = () => {
             <input 
                 name="titulo"
                 type="text"
-                placeholder="Ingresa tu Email"
+                placeholder="Ingresa el nombre del titulo"
                 className="w-full mt-3 p-3 border rounded-xl bg-gray-200"
                 value={titulo}
                 onChange= {handleChange}
