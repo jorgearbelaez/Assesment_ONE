@@ -1,9 +1,22 @@
 import {  useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+
 
 import { Link, useNavigate } from 'react-router-dom'
+import { deleteError, setLogout,updateUser } from '../redux/features/authSlice';
+
+import { toast } from 'react-toastify';
 
 const CreateAccount = () => {
-  
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const { loading, error } = useSelector((state) => ({ ...state.auth }));
+
+    
+  const {user} = useSelector(state=> state.auth)
+
     const [userForm, setUserForm] = useState({
         carrera: "",
         promedio:"",
@@ -11,12 +24,41 @@ const CreateAccount = () => {
       
     })
     const { universidad, carrera, promedio,titulo } = userForm;
+
+    useEffect(() => {
+        error && toast.error(error);
+        dispatch(deleteError())
+    }, [error]);
+
     const handleChange = (e) => {
         setUserForm({
             ...userForm,
             [e.target.name]: e.target.value,
         });
     };
+    const handleSubmit =  (e) => {
+        e.preventDefault();
+
+        if ([universidad, carrera, promedio, titulo].includes("")) {
+            return toast.error("Todos los campos son obligatorios");
+        }
+        
+        const {nombre, apellido, password, email}= user.userForm
+       
+        dispatch(updateUser({
+            nombre,
+            apellido,
+            password,
+            email,
+            universidad,
+            titulo,
+            carrera,
+            promedio
+        }));
+        navigate("/summary")
+        
+    };
+    
   return (
     <>
     <h1 className="text-black font-black text-6xl capitalize text-center">Informacion Acádemica
@@ -24,7 +66,7 @@ const CreateAccount = () => {
     
     <form  
         className="my-10 bg-white shadow rounded-lg p-10"
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
     >
 
         <div className="my-5">
@@ -86,7 +128,7 @@ const CreateAccount = () => {
            
         <input 
             type="submit" 
-            value="Crear Cuenta"
+            value="Guardar"
             className="bg-gray-800 mb-5 w-full py-3 text-white uppercase font-bold rounded text-xl hover:cursor-pointer hover:bg-gray-600 transition-colors"/>
     </form>
   

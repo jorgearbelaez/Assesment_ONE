@@ -1,10 +1,18 @@
 import {  useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Link, useNavigate } from 'react-router-dom'
+import { deleteError, setLogout, setUser } from '../redux/features/authSlice';
 
+import { toast } from 'react-toastify';
 
 
 const Register = () => {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const { error } = useSelector((state) => ({ ...state.auth }));
 
 
     const [userForm, setUserForm] = useState({
@@ -14,13 +22,39 @@ const Register = () => {
         password: "",
         confirmpassword: "",
     })
+   
     const { nombre, apellido,email, password, confirmpassword } = userForm;
+
+    
+  
+
     const handleChange = (e) => {
         setUserForm({
             ...userForm,
             [e.target.name]: e.target.value,
         });
     };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // if ([nombre, apellido, email, password, confirmpassword].includes("")) {
+        //     return toast.error("Todos los campos son obligatorios");
+        // }
+
+        // if (password !== confirmpassword) {
+        //     return toast.error("Las contraseñas no coinciden");
+        // }
+
+        // if (password.length < 6) {
+        //     return toast.error("La contraseña debe ser mayor a 6 caracteres");
+        // }
+
+        dispatch(setUser({ userForm }));
+        navigate("/create-account")
+    };
+
+
+
   return (
     <>
     <h1 className="text-black font-black text-6xl capitalize text-center">Informacion Personal
@@ -28,7 +62,7 @@ const Register = () => {
     
     <form  
         className="my-10 bg-white shadow rounded-lg p-10"
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
     >
 
         <div className="my-5">
@@ -102,12 +136,11 @@ const Register = () => {
                 />
 
         </div>
-        <nav className="text-center">
-            <Link
-            className="my-5 text-black font-bold uppercase text-sm"
-                to="/create-account"
-            >Siguiente</Link>
-    </nav>
+        <input 
+            type="submit" 
+            value="guardar info"
+            className="bg-gray-800 mb-5 w-full py-3 text-white uppercase font-bold rounded text-xl hover:cursor-pointer hover:bg-gray-600 transition-colors"/>
+    
     </form>
     <nav className="text-center">
             <Link

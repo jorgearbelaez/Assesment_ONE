@@ -1,0 +1,48 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+import * as api from "../api";
+
+export const register = createAsyncThunk(
+  "usuarios",
+  async ({ userForm, navigate, toast }, { rejectWithValue }) => {
+    try {
+      const response = await api.signUp(userForm);
+      toast.success("Registro exitoso");
+      navigate("/");
+      return response.data;
+    } catch (err) {
+      let error = err.response.data.msg
+        ? err.response.data.msg
+        : err.response && "Estamos presentando problemas internos";
+      return rejectWithValue(error);
+    }
+  }
+);
+
+const authSlice = createSlice({
+  name: "auth",
+  initialState: {
+    user: localStorage.getItem("profile")
+      ? JSON.parse(localStorage.getItem("profile"))
+      : null,
+  },
+  reducers: {
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
+    updateUser: (state, action) => {
+      state.user.userForm = action.payload;
+    },
+    setLogout: (state, action) => {
+      localStorage.clear();
+      state.user = null;
+    },
+    deleteError: (state, action) => {
+      state.error = "";
+    },
+  },
+});
+
+export const { setUser, setLogout, deleteError, updateUser } =
+  authSlice.actions;
+export default authSlice.reducer;
