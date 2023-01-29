@@ -18,6 +18,7 @@ const CreateAccount = () => {
   const {user} = useSelector(state=> state.auth)
 
     const [userForm, setUserForm] = useState({
+        universidad:"",
         carrera: "",
         promedio:"",
         titulo:""

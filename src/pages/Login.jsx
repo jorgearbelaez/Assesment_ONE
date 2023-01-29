@@ -15,6 +15,15 @@ const Login = () => {
     })
     const { email, password } = userForm;
 
+    useEffect(() => {
+        dispatch(setLogout())
+    }, [])
+
+    useEffect(() => {
+        error && toast.error(error);
+        dispatch(deleteError())
+    }, [error]);
+
     const handleChange = (e) => {
         setUserForm({
             ...userForm,

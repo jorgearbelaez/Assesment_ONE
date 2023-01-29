@@ -41,6 +41,8 @@ const authSlice = createSlice({
     user: localStorage.getItem("profile")
       ? JSON.parse(localStorage.getItem("profile"))
       : null,
+    error: "",
+    loading: false,
   },
   reducers: {
     setUser: (state, action) => {
@@ -56,6 +58,34 @@ const authSlice = createSlice({
     deleteError: (state, action) => {
       state.error = "";
     },
+  },
+  extraReducers: (builder) => {
+    // Login
+    builder.addCase(login.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(login.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(login.fulfilled, (state, action) => {
+      state.loading = false;
+      localStorage.setItem("profile", JSON.stringify({ ...action.payload }));
+      state.user = action.payload;
+    });
+    // Register
+    builder.addCase(register.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(register.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(register.fulfilled, (state, action) => {
+      state.loading = false;
+      localStorage.setItem("profile", JSON.stringify({ ...action.payload }));
+      state.user = action.payload;
+    });
   },
 });
 

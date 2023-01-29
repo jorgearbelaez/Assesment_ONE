@@ -12,7 +12,7 @@ const Register = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { error } = useSelector((state) => ({ ...state.auth }));
+    const { loading, error } = useSelector((state) => ({ ...state.auth }));
 
 
     const [userForm, setUserForm] = useState({
@@ -24,9 +24,14 @@ const Register = () => {
     })
    
     const { nombre, apellido,email, password, confirmpassword } = userForm;
-
+    useEffect(() => {
+        dispatch(setLogout())
+    }, [])
     
-  
+    useEffect(() => {
+        error && toast.error(error);
+        dispatch(deleteError())
+    }, [error]);
 
     const handleChange = (e) => {
         setUserForm({
@@ -37,17 +42,17 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // if ([nombre, apellido, email, password, confirmpassword].includes("")) {
-        //     return toast.error("Todos los campos son obligatorios");
-        // }
+        if ([nombre, apellido, email, password, confirmpassword].includes("")) {
+            return toast.error("Todos los campos son obligatorios");
+        }
 
-        // if (password !== confirmpassword) {
-        //     return toast.error("Las contraseñas no coinciden");
-        // }
+        if (password !== confirmpassword) {
+            return toast.error("Las contraseñas no coinciden");
+        }
 
-        // if (password.length < 6) {
-        //     return toast.error("La contraseña debe ser mayor a 6 caracteres");
-        // }
+        if (password.length < 6) {
+            return toast.error("La contraseña debe ser mayor a 6 caracteres");
+        }
 
         dispatch(setUser({ userForm }));
         navigate("/create-account")

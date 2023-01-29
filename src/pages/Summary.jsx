@@ -1,6 +1,8 @@
+import  { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import { deleteError, register, setLogout } from '../redux/features/authSlice';
 import { useNavigate } from 'react-router-dom'
+import { deleteError, register, setLogout } from '../redux/features/authSlice';
+
 import { toast } from 'react-toastify';
 
 const Users = () => {
@@ -8,10 +10,16 @@ const Users = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
 
+    const { loading, error } = useSelector((state) => ({ ...state.auth }));
+
     const {user} = useSelector(state=> state.auth)
     
     const {userForm} = user
-    console.log(userForm)
+   
+    useEffect(() => {
+        error && toast.error(error);
+        dispatch(deleteError())
+    }, [error]);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -54,14 +62,6 @@ const Users = () => {
             type="submit" 
             value="Crear Cuenta"
             className="bg-gray-800 mb-5 w-full py-3 text-white uppercase font-bold rounded text-xl hover:cursor-pointer hover:bg-gray-600 transition-colors"/>
-        
-
-        
-    
-          
-          
-          
-        
       
     </div>
   );

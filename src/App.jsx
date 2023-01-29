@@ -6,12 +6,13 @@ import Register from "./pages/register"
 import CreateAccount from "./pages/CreateAccount"
 import Summary from "./pages/Summary";
 import UserList from "./pages/Userlist";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
 
   return (
     <BrowserRouter>
-      <ToastContainer limit={1} autoClose={1000} />
+      <ToastContainer limit={1} autoClose={3000} />
       <Routes>
             <Route path="/" element={<Authlayout />}>
               <Route index element={<Login />} />
