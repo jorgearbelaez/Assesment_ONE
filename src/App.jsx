@@ -12,7 +12,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <ToastContainer limit={1} autoClose={3000} />
+      <ToastContainer limit={1} autoClose={2000} />
       <Routes>
             <Route path="/" element={<Authlayout />}>
               <Route index element={<Login />} />
