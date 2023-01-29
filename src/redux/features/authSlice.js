@@ -18,6 +18,22 @@ export const register = createAsyncThunk(
     }
   }
 );
+export const login = createAsyncThunk(
+  "auth/login",
+  async ({ userForm, navigate, toast }, { rejectWithValue }) => {
+    try {
+      const response = await api.signIn(userForm);
+      toast.success("Inicio de sesión exitoso");
+      navigate("/user-list");
+      return response.data;
+    } catch (err) {
+      let error = err.response.data.msg
+        ? err.response.data.msg
+        : err.response && "Estamos presentando problemas internos";
+      return rejectWithValue(error);
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: "auth",

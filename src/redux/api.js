@@ -9,7 +9,7 @@ clienteAxios.interceptors.request.use((req) => {
   return req;
 });
 
-// Auth
 export const signIn = (userForm) =>
-  clienteAxios.post("api/auth/login", userForm);
-export const signUp = (userForm) => clienteAxios.post("api/usuarios", userForm);
+  clienteAxios.post("auth/local/login", userForm);
+
+export const signUp = (userForm) => clienteAxios.post("api/users", userForm);

@@ -1,18 +1,38 @@
 import  { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteError, login, setLogout } from '../redux/features/authSlice'
 import { toast } from 'react-toastify'
 
 const Login = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const { loading, error } = useSelector((state) => ({ ...state.auth }));
 
     const [userForm, setUserForm] = useState({
         email: "", password: ""
     })
     const { email, password } = userForm;
+
     const handleChange = (e) => {
         setUserForm({
             ...userForm,
             [e.target.name]: e.target.value,
         });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if ([email, password].includes("")) {
+            return toast.error("Todos los campos son obligatorios");
+        }
+
+        dispatch(login({ userForm, navigate, toast }));
+
+        setUserForm({ email: "", password: "" })
+        
     };
   return (
     <>
@@ -21,7 +41,7 @@ const Login = () => {
         
         <form  
             className="my-10 bg-white shadow rounded-lg p-10"
-            // onSubmit={handleSubmit}
+            onSubmit={handleSubmit}
         >
 
             <div className="my-5">
