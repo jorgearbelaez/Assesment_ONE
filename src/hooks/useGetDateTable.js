@@ -12,8 +12,18 @@ const useGetDateTable = () => {
   useEffect(() => {
     const obtenerUsuarios = async () => {
       setLoading(true);
+
+      const { token } = JSON.parse(localStorage.getItem("profile"));
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
       let { data } = await clienteAxios.get(
-        `api/users?limite=${limite}&pagina=${pagina}`
+        `api/users?limite=${limite}&pagina=${pagina}`,
+        config
       );
       setPaginado(data);
       setLoading(false);
