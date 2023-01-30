@@ -98,19 +98,24 @@ const CreateAccount = () => {
                  />
 
         </div>
-        <div className="my-5">
+        <div className="my-5">            
             <label className="uppercase text-gray-900 block  text-xl font-bold"
             htmlFor="promedio"
             >Promedio</label>
-            <input 
-                name="promedio"
-                type="text"
+            <select     
+                name="promedio"                
                 placeholder="Ingresa tu promedio de calificaciones"
                 className="w-full mt-3 p-3 border rounded-xl bg-gray-200"
                 value={promedio}
                 onChange= {handleChange}
-                 />
-
+                >
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
+                        
+            </select>            
         </div>
         <div className="my-5">
             <label className="uppercase text-gray-900 block  text-xl font-bold"

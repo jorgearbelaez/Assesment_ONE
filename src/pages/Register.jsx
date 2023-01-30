@@ -24,6 +24,7 @@ const Register = () => {
     })
    
     const { nombre, apellido,email, password, confirmpassword } = userForm;
+
     useEffect(() => {
         dispatch(setLogout())
     }, [])
@@ -143,7 +144,7 @@ const Register = () => {
         </div>
         <input 
             type="submit" 
-            value="guardar info"
+            value="guardar"
             className="bg-gray-800 mb-5 w-full py-3 text-white uppercase font-bold rounded text-xl hover:cursor-pointer hover:bg-gray-600 transition-colors"/>
     
     </form>
